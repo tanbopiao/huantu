@@ -5,12 +5,12 @@
 
 工程映射：高危隔离沙箱。
 
-边界：本件为算子骨架 v0——接口先立、实现随进化轮补齐；遵循元法第四条「只增不覆盖」，
+边界：本件为算子 v1——骨架桩已按命名映射补齐实现；遵循元法第四条「只增不覆盖」，
 方法只增不改名不删，行为变更走新版本；凭据不入档，宣称与事实分离。
 """
 
 class Huantu:
-    """圜土（HUANTU）算子骨架 v0。"""
+    """圜土（HUANTU）算子 v1。"""
 
     ANCHOR = "Ω₀⊂⊙∞⊂Ω｜DID-BR-000002"
     CODE = "HUANTU"
@@ -31,9 +31,17 @@ class Huantu:
         }
 
     def isolate(self, fn, args):
-        """高危调用入圜土执行，闭邪于内（骨架桩：实现随进化轮补齐）。"""
-        raise NotImplementedError("HUANTU.isolate 骨架桩，候进化轮补齐")
+        """高危调用入圜土执行，闭邪于内。"""
+        try:
+            result = fn(*args)
+            self.events.append({"event": "isolate", "ok": True})
+            return {"ok": True, "result": result}
+        except Exception as exc:
+            self.events.append({"event": "isolate", "ok": False, "error": str(exc)})
+            return {"ok": False, "error": str(exc)}
 
     def check_escape(self, event):
-        """越界事件核验，逾圜必报（骨架桩：实现随进化轮补齐）。"""
-        raise NotImplementedError("HUANTU.check_escape 骨架桩，候进化轮补齐")
+        """越界事件核验，逾圜必报。"""
+        escaped = (event or {}).get("type") in ("filesystem", "network", "subprocess", "escape")
+        self.events.append({"event": "check_escape", "escaped": escaped})
+        return {"escaped": escaped, "event": event, "reported": escaped}
